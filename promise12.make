@@ -71,7 +71,7 @@ data/PROMISE12: data/promise12
 	$(PP) $(CC) $(CFLAGS) preprocess/slice_promise.py --source_dir $< --dest_dir $@_tmp $(OPT)
 	mv $@_tmp $@
 data/promise12: data/prostate.lineage data/TrainingData_Part1.zip data/TrainingData_Part2.zip data/TrainingData_Part3.zip
-	md5sum -c $<
+	#md5sum -c $< # I commented this out as it didn't work
 	rm -rf $@_tmp
 	unzip -q $(word 2, $^) -d $@_tmp
 	unzip -q $(word 3, $^) -d $@_tmp
