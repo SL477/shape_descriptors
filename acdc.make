@@ -70,10 +70,10 @@ data/ACDC-2D: data/acdc
 	rm -rf $@_tmp $@
 	$(PP) $(CC) $(CFLAGS) preprocess/slice_acdc.py --source_dir="data/acdc/training" --dest_dir=$@_tmp $(OPT)
 	mv $@_tmp $@
-
+# md5sum -c $<
 data/acdc: data/acdc.lineage data/acdc.zip
 	$(info $(yellow)unzip data/acdc.zip$(reset))
-	md5sum -c $<
+	cat $< | tr -d '\r' | md5sum -c -
 	rm -rf $@_tmp $@
 	unzip -q $(word 2, $^) -d $@_tmp
 	rm $@_tmp/training/*/*_4d.nii.gz  # space optimization

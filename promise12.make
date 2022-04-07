@@ -62,7 +62,7 @@ $(PACK): $(PLT) $(TRN)
 # 	tar cvf - $^ | zstd -T0 -#3 > $@
 # tar -zc -f $@ $^  # Use if pigz is not available
 
-
+#md5sum -c $< # I commented this out as it didn't work
 # Data generation
 data/PROMISE12/train/gt data/PROMISE12/val/gt: data/PROMISE12
 data/PROMISE12:  OPT = --seed=0 --retains 5 --retains_test 10
@@ -71,7 +71,7 @@ data/PROMISE12: data/promise12
 	$(PP) $(CC) $(CFLAGS) preprocess/slice_promise.py --source_dir $< --dest_dir $@_tmp $(OPT)
 	mv $@_tmp $@
 data/promise12: data/prostate.lineage data/TrainingData_Part1.zip data/TrainingData_Part2.zip data/TrainingData_Part3.zip
-	#md5sum -c $< # I commented this out as it didn't work
+	cat $< | tr -d '\r' | md5sum -c -
 	rm -rf $@_tmp
 	unzip -q $(word 2, $^) -d $@_tmp
 	unzip -q $(word 3, $^) -d $@_tmp
